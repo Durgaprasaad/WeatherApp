@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+      *{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+      }
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        background: url();
+        background-position: center;
+        background-size: cover;
+      }
+      #md {
+        border: 1px solid black;
+        width: 300px;
+        height: 380px;
+        border-radius: 25px;
+        backdrop-filter: blur(4px);
+      }
+     
+      form{
+        position: absolute;
+        margin-top: -450px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <form action="">
+      <input type="text" style="width: 230px; height: 20px; margin-left: 20px; border-radius: 20px; border: 0.2px solid;" placeholder="Enter City or State">
+      <input type="submit" style="padding: 4px; border-radius: 20px; border: 0.1px solid;">
+    </form>
+    <!-- <img src="../imgs/summer.jpeg" alt=""> -->
+    <div id="md">
+      <div id="imgg">
+        <img id="imgggg"
+          src=""
+          height="200px"
+          alt="" style="margin-top: 30px; margin-left: 40px;"
+        />
+      </div>
+
+      <h4 style="display: inline; position: absolute; margin-left: 10px;"></h4>
+      <h4
+        style="
+          display: inline;
+          position: absolute;
+          margin-left: 200px;
+          margin-top: -px;
+        "
+      ></h4>
+      <br />
+
+      <h4
+        style="
+          display: inline;
+          position: absolute;
+          margin-left: 10px;
+          margin-top: 50px;
+        "
+      ></h4>
+      <h4 style="display: inline; position: absolute; margin-top: 50px;margin-left: 200px"></h4>
+    </div>
+
+    <script>
+      formss=document.forms[0].addEventListener('submit',(e)=>{
+
+     e.preventDefault();
+     let a=e.target[0].value
+
+     
+      
+      
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${a}&appid=bf89bc2cde67abeceea98d4c23a10716`
+      )
+        .then((resolve) => {
+          return resolve.json();
+        })
+        .then((val) => {
+          console.log(val);
+
+          if((val["main"]["temp"] - 273).toFixed(2) < 20){
+          
+            let img = document.getElementById('imgggg'); // Select the img element
+          img.src = '../imgs/cold.png';
+          document.body.style.backgroundImage = "url('../imgs/ice bg.jpg')";
+          }
+          else if((val["main"]["temp"] - 273).toFixed(2)>=20 && (val["main"]["temp"] - 273).toFixed(2)<=25 ){
+            let imggo = document.getElementById('imgggg'); // Select the img element
+          imggo.src = '../imgs/sun-and-cloud.png';
+            document.body.style.backgroundImage = "url('../imgs/wamm.jpg')";
+          }else if((val["main"]["temp"] - 273).toFixed(2)>=26 && (val["main"]["temp"] - 273).toFixed(2)<=32 ){
+            let imggo = document.getElementById('imgggg'); // Select the img element
+          imggo.src = '../imgs/sunny.png';
+            document.body.style.backgroundImage = "url('../imgs/ok.jpg')";
+          }else if((val["main"]["temp"] - 273).toFixed(2)>=33 && (val["main"]["temp"] - 273).toFixed(2)<=50 ){
+            let imggo = document.getElementById('imgggg'); // Select the img element
+          imggo.src = '../imgs/hot-weather.png';
+            document.body.style.backgroundImage = "url('../imgs/summer.jpeg')";}
+
+          
+          
+          
+            celsius = document.getElementsByTagName("h4");
+          celsius[0].innerHTML = `<img src="../imgs/placeholder.png" height="20px"> ${val['name']}`;
+
+         
+          celsius[1].innerHTML = `<img src="../imgs/celsius.png" height="20px"> ${(val["main"]["temp"] - 273).toFixed(2)}°C`;
+
+          celsius[2].innerHTML =`<img src="../imgs/humidity.png" height="20px"> ${val['main']['humidity']}%`;
+          celsius[3].innerHTML = `<img src="../imgs/storm.png" height="20px"> ${val['wind']['speed']}`;
+          
+        }) });
+    </script>
+  </body>
+</html>
